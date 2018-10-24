@@ -1,0 +1,32 @@
+#### 启动端口和内置tomcat参数配置 #################################
+server:
+  port: 8103
+  tomcat:
+    uri-encoding: UTF-8
+    max-connections: 2000
+    max-threads: 1500
+  servlet:
+    context-path: /pt1002
+
+web:
+  upload_path: C:/
+properties:
+  SERVER_PATH: http://192.168.8.220:80
+  SCENE_PATH: /temp/scene/
+  IDENTITY_PATH:  /temp/identity/
+  TEMPLATES_PATH:  /temp/templates/
+  UPLOAD_TEMP_PATH: d:/temp/upload/
+template:
+  START_EXE: D:\3D\show-template\SurfaceImageShow.exe
+#### spring相关配置 #################################
+spring:
+  application:
+    name: pt1002
+#### 服务发现配置 #################################
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    service-url:
+#      defaultZone: http://192.168.0.225:8000/eureka/,http://192.168.0.226:8000/eureka/,http://192.168.0.230:8011/eureka/
+       defaultZone: http://192.168.0.220:8000/eureka/

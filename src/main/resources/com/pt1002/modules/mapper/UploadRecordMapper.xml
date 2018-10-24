@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pt1002.modules.mapper.UploadRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.pt1002.modules.pojo.UploadRecord" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="server_info" property="serverInfo" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="TINYINT" />
+    <result column="retry_times" property="retryTimes" jdbcType="INTEGER" />
+    <result column="last_update" property="lastUpdate" jdbcType="TIMESTAMP" />
+    <result column="certification_id" property="certificationId" jdbcType="BIGINT" />
+    <result column="guid" property="guid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, server_info, state, retry_times, last_update, certification_id, guid
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pt1002.modules.pojo.UploadRecordExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from certification_upload_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from certification_upload_record
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from certification_upload_record
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pt1002.modules.pojo.UploadRecordExample" >
+    delete from certification_upload_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pt1002.modules.pojo.UploadRecord" >
+    insert into certification_upload_record (id, server_info, state, 
+      retry_times, last_update, certification_id, 
+      guid)
+    values (#{id,jdbcType=INTEGER}, #{serverInfo,jdbcType=VARCHAR}, #{state,jdbcType=TINYINT}, 
+      #{retryTimes,jdbcType=INTEGER}, #{lastUpdate,jdbcType=TIMESTAMP}, #{certificationId,jdbcType=BIGINT}, 
+      #{guid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pt1002.modules.pojo.UploadRecord" >
+    insert into certification_upload_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="serverInfo != null" >
+        server_info,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="retryTimes != null" >
+        retry_times,
+      </if>
+      <if test="lastUpdate != null" >
+        last_update,
+      </if>
+      <if test="certificationId != null" >
+        certification_id,
+      </if>
+      <if test="guid != null" >
+        guid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="serverInfo != null" >
+        #{serverInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=TINYINT},
+      </if>
+      <if test="retryTimes != null" >
+        #{retryTimes,jdbcType=INTEGER},
+      </if>
+      <if test="lastUpdate != null" >
+        #{lastUpdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="certificationId != null" >
+        #{certificationId,jdbcType=BIGINT},
+      </if>
+      <if test="guid != null" >
+        #{guid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pt1002.modules.pojo.UploadRecordExample" resultType="java.lang.Integer" >
+    select count(*) from certification_upload_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update certification_upload_record
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.serverInfo != null" >
+        server_info = #{record.serverInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.state != null" >
+        state = #{record.state,jdbcType=TINYINT},
+      </if>
+      <if test="record.retryTimes != null" >
+        retry_times = #{record.retryTimes,jdbcType=INTEGER},
+      </if>
+      <if test="record.lastUpdate != null" >
+        last_update = #{record.lastUpdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.certificationId != null" >
+        certification_id = #{record.certificationId,jdbcType=BIGINT},
+      </if>
+      <if test="record.guid != null" >
+        guid = #{record.guid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update certification_upload_record
+    set id = #{record.id,jdbcType=INTEGER},
+      server_info = #{record.serverInfo,jdbcType=VARCHAR},
+      state = #{record.state,jdbcType=TINYINT},
+      retry_times = #{record.retryTimes,jdbcType=INTEGER},
+      last_update = #{record.lastUpdate,jdbcType=TIMESTAMP},
+      certification_id = #{record.certificationId,jdbcType=BIGINT},
+      guid = #{record.guid,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pt1002.modules.pojo.UploadRecord" >
+    update certification_upload_record
+    <set >
+      <if test="serverInfo != null" >
+        server_info = #{serverInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=TINYINT},
+      </if>
+      <if test="retryTimes != null" >
+        retry_times = #{retryTimes,jdbcType=INTEGER},
+      </if>
+      <if test="lastUpdate != null" >
+        last_update = #{lastUpdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="certificationId != null" >
+        certification_id = #{certificationId,jdbcType=BIGINT},
+      </if>
+      <if test="guid != null" >
+        guid = #{guid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pt1002.modules.pojo.UploadRecord" >
+    update certification_upload_record
+    set server_info = #{serverInfo,jdbcType=VARCHAR},
+      state = #{state,jdbcType=TINYINT},
+      retry_times = #{retryTimes,jdbcType=INTEGER},
+      last_update = #{lastUpdate,jdbcType=TIMESTAMP},
+      certification_id = #{certificationId,jdbcType=BIGINT},
+      guid = #{guid,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="findAllNotUploadRecord" resultType="long">
+    SELECT cr.id FROM certification_record cr
+    LEFT JOIN certification_upload_record cur ON cr.id = cur.certification_id
+    WHERE cur.state != 2 OR ISNULL(cur.state)
+  </select>
+  
+</mapper>

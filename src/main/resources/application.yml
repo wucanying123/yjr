@@ -1,0 +1,52 @@
+spring:
+#### 数据库连接配置 ##############################################################################
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: 123456
+    url: jdbc:mysql://192.168.0.220:3306/pt1002?characterEncoding=utf8&useSSL=false
+#    url: jdbc:mysql://127.0.0.1:3306/pt1002?characterEncoding=utf8&useSSL=false
+    type: com.alibaba.druid.pool.DruidDataSource
+
+#### 日期返回格式 ################################################################################
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  resources:
+    static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/templates/,classpath:/public/,file:${web.upload_path}
+
+#### redis连接信息 ###############################################################################
+  http:
+    multipart:
+       max-file-size: 20Mb
+       max-request-size: 20Mb
+  thymeleaf:
+    cache: false
+    mode: LEGACYHTML5
+  pagehelper:
+    helperDialect: sqlserver
+    reasonable: true
+    supportMethodsArguments: true
+    pageSizeZero: true
+    params: count=countSql
+
+#### 日志配置 ################################################################################
+logging:
+  config: classpath:logback-spring.xml
+  path: /home/log/pt1002
+
+
+#### 启动端口和内置tomcat参数配置 #################################
+
+
+#web:
+#  upload_path: /
+#properties:
+#  SERVER_PATH: http://10.0.0.223:8091
+#  SCENE_PATH: /usr/local/runnable-jars/temp/scene/
+#  IDENTITY_PATH: /usr/local/runnable-jars/temp/identity/
+#  TEMPLATES_PATH: /usr/local/runnable-jars/temp/templates/
+
+thirdparty:
+  file-upload-url: /datadoorinterface/fileupload
+  certification-upload-url: /datadoorinterface/person

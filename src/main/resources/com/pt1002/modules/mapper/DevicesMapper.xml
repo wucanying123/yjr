@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pt1002.modules.mapper.DevicesMapper" >
+  <resultMap id="BaseResultMap" type="com.pt1002.modules.pojo.Devices" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="sn" property="sn" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="ip" property="ip" jdbcType="VARCHAR" />
+    <result column="port" property="port" jdbcType="INTEGER" />
+    <result column="is_active" property="isActive" jdbcType="TINYINT" />
+    <result column="type_id" property="typeId" jdbcType="VARCHAR" />
+    <result column="can_push" property="canPush" jdbcType="BIT" />
+    <result column="longitude" property="longitude" jdbcType="VARCHAR" />
+    <result column="latitude" property="latitude" jdbcType="VARCHAR" />
+    <result column="station_id" property="stationId" jdbcType="VARCHAR" />
+    <result column="station_name" property="stationName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, sn, create_time, name, ip, port, is_active, type_id, can_push, longitude, latitude, 
+    station_id, station_name
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pt1002.modules.pojo.DevicesExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from devices
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from devices
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from devices
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pt1002.modules.pojo.DevicesExample" >
+    delete from devices
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pt1002.modules.pojo.Devices" >
+    insert into devices (id, sn, create_time, 
+      name, ip, port, is_active, 
+      type_id, can_push, longitude, 
+      latitude, station_id, station_name
+      )
+    values (#{id,jdbcType=INTEGER}, #{sn,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{name,jdbcType=VARCHAR}, #{ip,jdbcType=VARCHAR}, #{port,jdbcType=INTEGER}, #{isActive,jdbcType=TINYINT}, 
+      #{typeId,jdbcType=VARCHAR}, #{canPush,jdbcType=BIT}, #{longitude,jdbcType=VARCHAR}, 
+      #{latitude,jdbcType=VARCHAR}, #{stationId,jdbcType=VARCHAR}, #{stationName,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pt1002.modules.pojo.Devices" >
+    insert into devices
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="sn != null" >
+        sn,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="ip != null" >
+        ip,
+      </if>
+      <if test="port != null" >
+        port,
+      </if>
+      <if test="isActive != null" >
+        is_active,
+      </if>
+      <if test="typeId != null" >
+        type_id,
+      </if>
+      <if test="canPush != null" >
+        can_push,
+      </if>
+      <if test="longitude != null" >
+        longitude,
+      </if>
+      <if test="latitude != null" >
+        latitude,
+      </if>
+      <if test="stationId != null" >
+        station_id,
+      </if>
+      <if test="stationName != null" >
+        station_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="sn != null" >
+        #{sn,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null" >
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="port != null" >
+        #{port,jdbcType=INTEGER},
+      </if>
+      <if test="isActive != null" >
+        #{isActive,jdbcType=TINYINT},
+      </if>
+      <if test="typeId != null" >
+        #{typeId,jdbcType=VARCHAR},
+      </if>
+      <if test="canPush != null" >
+        #{canPush,jdbcType=BIT},
+      </if>
+      <if test="longitude != null" >
+        #{longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null" >
+        #{latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="stationId != null" >
+        #{stationId,jdbcType=VARCHAR},
+      </if>
+      <if test="stationName != null" >
+        #{stationName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pt1002.modules.pojo.DevicesExample" resultType="java.lang.Integer" >
+    select count(*) from devices
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update devices
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.sn != null" >
+        sn = #{record.sn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ip != null" >
+        ip = #{record.ip,jdbcType=VARCHAR},
+      </if>
+      <if test="record.port != null" >
+        port = #{record.port,jdbcType=INTEGER},
+      </if>
+      <if test="record.isActive != null" >
+        is_active = #{record.isActive,jdbcType=TINYINT},
+      </if>
+      <if test="record.typeId != null" >
+        type_id = #{record.typeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.canPush != null" >
+        can_push = #{record.canPush,jdbcType=BIT},
+      </if>
+      <if test="record.longitude != null" >
+        longitude = #{record.longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="record.latitude != null" >
+        latitude = #{record.latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stationId != null" >
+        station_id = #{record.stationId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stationName != null" >
+        station_name = #{record.stationName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update devices
+    set id = #{record.id,jdbcType=INTEGER},
+      sn = #{record.sn,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      name = #{record.name,jdbcType=VARCHAR},
+      ip = #{record.ip,jdbcType=VARCHAR},
+      port = #{record.port,jdbcType=INTEGER},
+      is_active = #{record.isActive,jdbcType=TINYINT},
+      type_id = #{record.typeId,jdbcType=VARCHAR},
+      can_push = #{record.canPush,jdbcType=BIT},
+      longitude = #{record.longitude,jdbcType=VARCHAR},
+      latitude = #{record.latitude,jdbcType=VARCHAR},
+      station_id = #{record.stationId,jdbcType=VARCHAR},
+      station_name = #{record.stationName,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pt1002.modules.pojo.Devices" >
+    update devices
+    <set >
+      <if test="sn != null" >
+        sn = #{sn,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null" >
+        ip = #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="port != null" >
+        port = #{port,jdbcType=INTEGER},
+      </if>
+      <if test="isActive != null" >
+        is_active = #{isActive,jdbcType=TINYINT},
+      </if>
+      <if test="typeId != null" >
+        type_id = #{typeId,jdbcType=VARCHAR},
+      </if>
+      <if test="canPush != null" >
+        can_push = #{canPush,jdbcType=BIT},
+      </if>
+      <if test="longitude != null" >
+        longitude = #{longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null" >
+        latitude = #{latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="stationId != null" >
+        station_id = #{stationId,jdbcType=VARCHAR},
+      </if>
+      <if test="stationName != null" >
+        station_name = #{stationName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pt1002.modules.pojo.Devices" >
+    update devices
+    set sn = #{sn,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      name = #{name,jdbcType=VARCHAR},
+      ip = #{ip,jdbcType=VARCHAR},
+      port = #{port,jdbcType=INTEGER},
+      is_active = #{isActive,jdbcType=TINYINT},
+      type_id = #{typeId,jdbcType=VARCHAR},
+      can_push = #{canPush,jdbcType=BIT},
+      longitude = #{longitude,jdbcType=VARCHAR},
+      latitude = #{latitude,jdbcType=VARCHAR},
+      station_id = #{stationId,jdbcType=VARCHAR},
+      station_name = #{stationName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <!--custom-->
+  <select id="selectBySn" parameterType="String" resultMap="BaseResultMap">
+    SELECT  *
+    FROM devices
+    WHERE sn=#{sn,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByTypeId" parameterType="String" resultType="com.pt1002.modules.pojo.Devices">
+    select * from devices where type_id=#{id,jdbcType=VARCHAR}
+  </select>
+</mapper>

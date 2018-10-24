@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pt1002.modules.mapper.PersonsMapper">
+    <resultMap id="BaseResultMap" type="com.pt1002.modules.pojo.Persons">
+        <id column="pid" property="pid" jdbcType="INTEGER"/>
+        <result column="uid" property="uid" jdbcType="VARCHAR"/>
+        <result column="first_name" property="firstName" jdbcType="VARCHAR"/>
+        <result column="middle_name" property="middleName" jdbcType="VARCHAR"/>
+        <result column="last_name" property="lastName" jdbcType="VARCHAR"/>
+        <result column="birth" property="birth" jdbcType="DATE"/>
+        <result column="sex" property="sex" jdbcType="CHAR"/>
+        <result column="is_admin" property="isAdmin" jdbcType="BIT"/>
+        <result column="card_id" property="cardId" jdbcType="VARCHAR"/>
+        <result column="photo_path" property="photoPath" jdbcType="VARCHAR"/>
+    </resultMap>
+    <resultMap id="ResultMapWithBLOBs" type="com.pt1002.modules.pojo.Persons" extends="BaseResultMap">
+        <result column="photo" property="photo" jdbcType="LONGVARBINARY"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    pid, uid, first_name, middle_name, last_name, birth, sex, is_admin, card_id,photo_path
+  </sql>
+    <sql id="Blob_Column_List">
+    photo
+  </sql>
+    <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs"
+            parameterType="com.pt1002.modules.pojo.PersonsExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from persons
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pt1002.modules.pojo.PersonsExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from persons
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from persons
+        where pid = #{pid,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from persons
+    where pid = #{pid,jdbcType=INTEGER}
+  </delete>
+    <delete id="deleteByExample" parameterType="com.pt1002.modules.pojo.PersonsExample">
+        delete from persons
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.pt1002.modules.pojo.Persons">
+    insert into persons (pid, uid, first_name, 
+      middle_name, last_name, birth, 
+      sex, is_admin, card_id, photo,photo_path
+      )
+    values (#{pid,jdbcType=INTEGER}, #{uid,jdbcType=VARCHAR}, #{firstName,jdbcType=VARCHAR}, 
+      #{middleName,jdbcType=VARCHAR}, #{lastName,jdbcType=VARCHAR}, #{birth,jdbcType=DATE}, 
+      #{sex,jdbcType=CHAR}, #{isAdmin,jdbcType=BIT}, #{cardId,jdbcType=VARCHAR}, #{photo,jdbcType=LONGVARBINARY},#{photoPath,jdbcType=VARCHAR}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.pt1002.modules.pojo.Persons" useGeneratedKeys="true"
+            keyProperty="pid">
+        insert into persons
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pid != null">
+                pid,
+            </if>
+            <if test="uid != null">
+                uid,
+            </if>
+            <if test="firstName != null">
+                first_name,
+            </if>
+            <if test="middleName != null">
+                middle_name,
+            </if>
+            <if test="lastName != null">
+                last_name,
+            </if>
+            <if test="birth != null">
+                birth,
+            </if>
+            <if test="sex != null">
+                sex,
+            </if>
+            <if test="isAdmin != null">
+                is_admin,
+            </if>
+            <if test="cardId != null">
+                card_id,
+            </if>
+            <if test="photo != null">
+                photo,
+            </if>
+            <if test="photoPath != null">
+                photo_path,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="pid != null">
+                #{pid,jdbcType=INTEGER},
+            </if>
+            <if test="uid != null">
+                #{uid,jdbcType=VARCHAR},
+            </if>
+            <if test="firstName != null">
+                #{firstName,jdbcType=VARCHAR},
+            </if>
+            <if test="middleName != null">
+                #{middleName,jdbcType=VARCHAR},
+            </if>
+            <if test="lastName != null">
+                #{lastName,jdbcType=VARCHAR},
+            </if>
+            <if test="birth != null">
+                #{birth,jdbcType=DATE},
+            </if>
+            <if test="sex != null">
+                #{sex,jdbcType=CHAR},
+            </if>
+            <if test="isAdmin != null">
+                #{isAdmin,jdbcType=BIT},
+            </if>
+            <if test="cardId != null">
+                #{cardId,jdbcType=VARCHAR},
+            </if>
+            <if test="photo != null">
+                #{photo,jdbcType=LONGVARBINARY},
+            </if>
+            <if test="photoPath != null">
+                #{photoPath,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.pt1002.modules.pojo.PersonsExample" resultType="java.lang.Integer">
+        select count(*) from persons
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update persons
+        <set>
+            <if test="record.pid != null">
+                pid = #{record.pid,jdbcType=INTEGER},
+            </if>
+            <if test="record.uid != null">
+                uid = #{record.uid,jdbcType=VARCHAR},
+            </if>
+            <if test="record.firstName != null">
+                first_name = #{record.firstName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.middleName != null">
+                middle_name = #{record.middleName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.lastName != null">
+                last_name = #{record.lastName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.birth != null">
+                birth = #{record.birth,jdbcType=DATE},
+            </if>
+            <if test="record.sex != null">
+                sex = #{record.sex,jdbcType=CHAR},
+            </if>
+            <if test="record.isAdmin != null">
+                is_admin = #{record.isAdmin,jdbcType=BIT},
+            </if>
+            <if test="record.cardId != null">
+                card_id = #{record.cardId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.photo != null">
+                photo = #{record.photo,jdbcType=LONGVARBINARY},
+            </if>
+            <if test="record.photoPath != null">
+                photo_path = #{record.photoPath,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExampleWithBLOBs" parameterType="map">
+        update persons
+        set pid = #{record.pid,jdbcType=INTEGER},
+        uid = #{record.uid,jdbcType=VARCHAR},
+        first_name = #{record.firstName,jdbcType=VARCHAR},
+        middle_name = #{record.middleName,jdbcType=VARCHAR},
+        last_name = #{record.lastName,jdbcType=VARCHAR},
+        birth = #{record.birth,jdbcType=DATE},
+        sex = #{record.sex,jdbcType=CHAR},
+        is_admin = #{record.isAdmin,jdbcType=BIT},
+        card_id = #{record.cardId,jdbcType=VARCHAR},
+        photo = #{record.photo,jdbcType=LONGVARBINARY},
+        photo_path = #{record.photoPath,jdbcType=VARCHAR}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update persons
+        set pid = #{record.pid,jdbcType=INTEGER},
+        uid = #{record.uid,jdbcType=VARCHAR},
+        first_name = #{record.firstName,jdbcType=VARCHAR},
+        middle_name = #{record.middleName,jdbcType=VARCHAR},
+        last_name = #{record.lastName,jdbcType=VARCHAR},
+        birth = #{record.birth,jdbcType=DATE},
+        sex = #{record.sex,jdbcType=CHAR},
+        is_admin = #{record.isAdmin,jdbcType=BIT},
+        card_id = #{record.cardId,jdbcType=VARCHAR},
+        photo_path = #{record.photoPath,jdbcType=VARCHAR}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.pt1002.modules.pojo.Persons">
+        update persons
+        <set>
+            <if test="uid != null">
+                uid = #{uid,jdbcType=VARCHAR},
+            </if>
+            <if test="firstName != null">
+                first_name = #{firstName,jdbcType=VARCHAR},
+            </if>
+            <if test="middleName != null">
+                middle_name = #{middleName,jdbcType=VARCHAR},
+            </if>
+            <if test="lastName != null">
+                last_name = #{lastName,jdbcType=VARCHAR},
+            </if>
+            <if test="birth != null">
+                birth = #{birth,jdbcType=DATE},
+            </if>
+            <if test="sex != null">
+                sex = #{sex,jdbcType=CHAR},
+            </if>
+            <if test="isAdmin != null">
+                is_admin = #{isAdmin,jdbcType=BIT},
+            </if>
+            <if test="cardId != null">
+                card_id = #{cardId,jdbcType=VARCHAR},
+            </if>
+            <if test="photo != null">
+                photo = #{photo,jdbcType=LONGVARBINARY},
+            </if>
+            <if test="photoPath != null">
+                #{photoPath,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where pid = #{pid,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pt1002.modules.pojo.Persons">
+    update persons
+    set uid = #{uid,jdbcType=VARCHAR},
+      first_name = #{firstName,jdbcType=VARCHAR},
+      middle_name = #{middleName,jdbcType=VARCHAR},
+      last_name = #{lastName,jdbcType=VARCHAR},
+      birth = #{birth,jdbcType=DATE},
+      sex = #{sex,jdbcType=CHAR},
+      is_admin = #{isAdmin,jdbcType=BIT},
+      card_id = #{cardId,jdbcType=VARCHAR},
+      photo = #{photo,jdbcType=LONGVARBINARY},
+       photo_path = #{photoPath,jdbcType=VARCHAR}
+    where pid = #{pid,jdbcType=INTEGER}
+  </update>
+    <update id="updateByPrimaryKey" parameterType="com.pt1002.modules.pojo.Persons">
+    update persons
+    set uid = #{uid,jdbcType=VARCHAR},
+      first_name = #{firstName,jdbcType=VARCHAR},
+      middle_name = #{middleName,jdbcType=VARCHAR},
+      last_name = #{lastName,jdbcType=VARCHAR},
+      birth = #{birth,jdbcType=DATE},
+      sex = #{sex,jdbcType=CHAR},
+      is_admin = #{isAdmin,jdbcType=BIT},
+      card_id = #{cardId,jdbcType=VARCHAR},
+         photo_path = #{photoPath,jdbcType=VARCHAR}
+    where pid = #{pid,jdbcType=INTEGER}
+  </update>
+    <delete id="deleteByCardId" parameterType="Long">
+    DELETE FROM persons WHERE  card_id = #{id,jdbcType=BIGINT}
+  </delete>
+    <select id="selectByCardId" parameterType="Long" resultMap="ResultMapWithBLOBs">
+    select * FROM  persons WHERE  card_id = #{id,jdbcType=BIGINT}
+  </select>
+</mapper>

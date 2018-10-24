@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pt1002.modules.mapper.TemplatesMapper" >
+  <resultMap id="BaseResultMap" type="com.pt1002.modules.pojo.Templates" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="uid" property="uid" jdbcType="VARCHAR" />
+    <result column="pid" property="pid" jdbcType="INTEGER" />
+    <result column="date" property="date" jdbcType="TIMESTAMP" />
+    <result column="device_sn" property="deviceSn" jdbcType="VARCHAR" />
+    <result column="mark" property="mark" jdbcType="INTEGER" />
+    <result column="enr_dist" property="enrDist" jdbcType="REAL" />
+    <result column="quality" property="quality" jdbcType="SMALLINT" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.pt1002.modules.pojo.TemplatesWithBLOBs" extends="BaseResultMap" >
+    <result column="template" property="template" jdbcType="LONGVARBINARY" />
+    <result column="hi_res" property="hiRes" jdbcType="LONGVARBINARY" />
+    <result column="hi_res_tex" property="hiResTex" jdbcType="LONGVARBINARY" />
+    <result column="sample" property="sample" jdbcType="LONGVARBINARY" />
+    <result column="models" property="models" jdbcType="LONGVARBINARY" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, uid, pid, date, device_sn, mark, enr_dist, quality
+  </sql>
+  <sql id="Blob_Column_List" >
+    template, hi_res, hi_res_tex, sample, models
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.pt1002.modules.pojo.TemplatesExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from templates
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pt1002.modules.pojo.TemplatesExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from templates
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from templates
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from templates
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pt1002.modules.pojo.TemplatesExample" >
+    delete from templates
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pt1002.modules.pojo.TemplatesWithBLOBs" >
+    insert into templates (id, uid, pid, 
+      date, device_sn, mark, 
+      enr_dist, quality, template, 
+      hi_res, hi_res_tex, sample, 
+      models)
+    values (#{id,jdbcType=INTEGER}, #{uid,jdbcType=VARCHAR}, #{pid,jdbcType=INTEGER}, 
+      #{date,jdbcType=TIMESTAMP}, #{deviceSn,jdbcType=VARCHAR}, #{mark,jdbcType=INTEGER}, 
+      #{enrDist,jdbcType=REAL}, #{quality,jdbcType=SMALLINT}, #{template,jdbcType=LONGVARBINARY}, 
+      #{hiRes,jdbcType=LONGVARBINARY}, #{hiResTex,jdbcType=LONGVARBINARY}, #{sample,jdbcType=LONGVARBINARY}, 
+      #{models,jdbcType=LONGVARBINARY})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pt1002.modules.pojo.TemplatesWithBLOBs" >
+    insert into templates
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="pid != null" >
+        pid,
+      </if>
+      <if test="date != null" >
+        date,
+      </if>
+      <if test="deviceSn != null" >
+        device_sn,
+      </if>
+      <if test="mark != null" >
+        mark,
+      </if>
+      <if test="enrDist != null" >
+        enr_dist,
+      </if>
+      <if test="quality != null" >
+        quality,
+      </if>
+      <if test="template != null" >
+        template,
+      </if>
+      <if test="hiRes != null" >
+        hi_res,
+      </if>
+      <if test="hiResTex != null" >
+        hi_res_tex,
+      </if>
+      <if test="sample != null" >
+        sample,
+      </if>
+      <if test="models != null" >
+        models,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null" >
+        #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="date != null" >
+        #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deviceSn != null" >
+        #{deviceSn,jdbcType=VARCHAR},
+      </if>
+      <if test="mark != null" >
+        #{mark,jdbcType=INTEGER},
+      </if>
+      <if test="enrDist != null" >
+        #{enrDist,jdbcType=REAL},
+      </if>
+      <if test="quality != null" >
+        #{quality,jdbcType=SMALLINT},
+      </if>
+      <if test="template != null" >
+        #{template,jdbcType=LONGVARBINARY},
+      </if>
+      <if test="hiRes != null" >
+        #{hiRes,jdbcType=LONGVARBINARY},
+      </if>
+      <if test="hiResTex != null" >
+        #{hiResTex,jdbcType=LONGVARBINARY},
+      </if>
+      <if test="sample != null" >
+        #{sample,jdbcType=LONGVARBINARY},
+      </if>
+      <if test="models != null" >
+        #{models,jdbcType=LONGVARBINARY},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pt1002.modules.pojo.TemplatesExample" resultType="java.lang.Integer" >
+    select count(*) from templates
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update templates
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.uid != null" >
+        uid = #{record.uid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pid != null" >
+        pid = #{record.pid,jdbcType=INTEGER},
+      </if>
+      <if test="record.date != null" >
+        date = #{record.date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.deviceSn != null" >
+        device_sn = #{record.deviceSn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mark != null" >
+        mark = #{record.mark,jdbcType=INTEGER},
+      </if>
+      <if test="record.enrDist != null" >
+        enr_dist = #{record.enrDist,jdbcType=REAL},
+      </if>
+      <if test="record.quality != null" >
+        quality = #{record.quality,jdbcType=SMALLINT},
+      </if>
+      <if test="record.template != null" >
+        template = #{record.template,jdbcType=LONGVARBINARY},
+      </if>
+      <if test="record.hiRes != null" >
+        hi_res = #{record.hiRes,jdbcType=LONGVARBINARY},
+      </if>
+      <if test="record.hiResTex != null" >
+        hi_res_tex = #{record.hiResTex,jdbcType=LONGVARBINARY},
+      </if>
+      <if test="record.sample != null" >
+        sample = #{record.sample,jdbcType=LONGVARBINARY},
+      </if>
+      <if test="record.models != null" >
+        models = #{record.models,jdbcType=LONGVARBINARY},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update templates
+    set id = #{record.id,jdbcType=INTEGER},
+      uid = #{record.uid,jdbcType=VARCHAR},
+      pid = #{record.pid,jdbcType=INTEGER},
+      date = #{record.date,jdbcType=TIMESTAMP},
+      device_sn = #{record.deviceSn,jdbcType=VARCHAR},
+      mark = #{record.mark,jdbcType=INTEGER},
+      enr_dist = #{record.enrDist,jdbcType=REAL},
+      quality = #{record.quality,jdbcType=SMALLINT},
+      template = #{record.template,jdbcType=LONGVARBINARY},
+      hi_res = #{record.hiRes,jdbcType=LONGVARBINARY},
+      hi_res_tex = #{record.hiResTex,jdbcType=LONGVARBINARY},
+      sample = #{record.sample,jdbcType=LONGVARBINARY},
+      models = #{record.models,jdbcType=LONGVARBINARY}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update templates
+    set id = #{record.id,jdbcType=INTEGER},
+      uid = #{record.uid,jdbcType=VARCHAR},
+      pid = #{record.pid,jdbcType=INTEGER},
+      date = #{record.date,jdbcType=TIMESTAMP},
+      device_sn = #{record.deviceSn,jdbcType=VARCHAR},
+      mark = #{record.mark,jdbcType=INTEGER},
+      enr_dist = #{record.enrDist,jdbcType=REAL},
+      quality = #{record.quality,jdbcType=SMALLINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pt1002.modules.pojo.TemplatesWithBLOBs" >
+    update templates
+    <set >
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null" >
+        pid = #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="date != null" >
+        date = #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deviceSn != null" >
+        device_sn = #{deviceSn,jdbcType=VARCHAR},
+      </if>
+      <if test="mark != null" >
+        mark = #{mark,jdbcType=INTEGER},
+      </if>
+      <if test="enrDist != null" >
+        enr_dist = #{enrDist,jdbcType=REAL},
+      </if>
+      <if test="quality != null" >
+        quality = #{quality,jdbcType=SMALLINT},
+      </if>
+      <if test="template != null" >
+        template = #{template,jdbcType=LONGVARBINARY},
+      </if>
+      <if test="hiRes != null" >
+        hi_res = #{hiRes,jdbcType=LONGVARBINARY},
+      </if>
+      <if test="hiResTex != null" >
+        hi_res_tex = #{hiResTex,jdbcType=LONGVARBINARY},
+      </if>
+      <if test="sample != null" >
+        sample = #{sample,jdbcType=LONGVARBINARY},
+      </if>
+      <if test="models != null" >
+        models = #{models,jdbcType=LONGVARBINARY},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pt1002.modules.pojo.TemplatesWithBLOBs" >
+    update templates
+    set uid = #{uid,jdbcType=VARCHAR},
+      pid = #{pid,jdbcType=INTEGER},
+      date = #{date,jdbcType=TIMESTAMP},
+      device_sn = #{deviceSn,jdbcType=VARCHAR},
+      mark = #{mark,jdbcType=INTEGER},
+      enr_dist = #{enrDist,jdbcType=REAL},
+      quality = #{quality,jdbcType=SMALLINT},
+      template = #{template,jdbcType=LONGVARBINARY},
+      hi_res = #{hiRes,jdbcType=LONGVARBINARY},
+      hi_res_tex = #{hiResTex,jdbcType=LONGVARBINARY},
+      sample = #{sample,jdbcType=LONGVARBINARY},
+      models = #{models,jdbcType=LONGVARBINARY}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pt1002.modules.pojo.Templates" >
+    update templates
+    set uid = #{uid,jdbcType=VARCHAR},
+      pid = #{pid,jdbcType=INTEGER},
+      date = #{date,jdbcType=TIMESTAMP},
+      device_sn = #{deviceSn,jdbcType=VARCHAR},
+      mark = #{mark,jdbcType=INTEGER},
+      enr_dist = #{enrDist,jdbcType=REAL},
+      quality = #{quality,jdbcType=SMALLINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+<select id="selectByPid" parameterType="Integer" resultType="com.pt1002.modules.pojo.TemplatesWithBLOBs">
+  SELECT * FROM templates WHERE pid=#{id,jdbcType=INTEGER}
+</select>
+  <select id="selectByDevicesSn" parameterType="String" resultType="com.pt1002.modules.pojo.TemplatesWithBLOBs">
+      SELECT * FROM templates WHERE device_sn=#{sn,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByDevicesSn" parameterType="String" >
+    DELETE FROM templates
+    WHERE device_sn=#{sn,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByPid" parameterType="Integer">
+    DELETE from templates WHERE pid=#{id,jdbcType=INTEGER}
+  </delete>
+</mapper>

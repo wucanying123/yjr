@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pt1002.modules.mapper.WifiMapper">
+  <resultMap id="BaseResultMap" type="com.pt1002.modules.pojo.Wifi">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="devmac" jdbcType="VARCHAR" property="devmac" />
+    <result column="climac" jdbcType="VARCHAR" property="climac" />
+    <result column="ssid" jdbcType="VARCHAR" property="ssid" />
+    <result column="bssid" jdbcType="VARCHAR" property="bssid" />
+    <result column="time" jdbcType="VARCHAR" property="time" />
+    <result column="signall" jdbcType="VARCHAR" property="signall" />
+    <result column="channel" jdbcType="CHAR" property="channel" />
+    <result column="record_id" jdbcType="BIGINT" property="recordId" />
+    <result column="oui" jdbcType="VARCHAR" property="oui" />
+    <result column="filetype" jdbcType="VARCHAR" property="type" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, devmac, climac, ssid, bssid, time, signall, channel, record_id, oui, filetype
+  </sql>
+  <select id="selectByExample" parameterType="com.pt1002.modules.pojo.WifiExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from wifi
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from wifi
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from wifi
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pt1002.modules.pojo.WifiExample">
+    delete from wifi
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pt1002.modules.pojo.Wifi">
+    insert into wifi (id, devmac, climac, 
+      ssid, bssid, time, 
+      signall, channel, record_id, 
+      oui, filetype)
+    values (#{id,jdbcType=INTEGER}, #{devmac,jdbcType=VARCHAR}, #{climac,jdbcType=VARCHAR}, 
+      #{ssid,jdbcType=VARCHAR}, #{bssid,jdbcType=VARCHAR}, #{time,jdbcType=VARCHAR}, 
+      #{signall,jdbcType=VARCHAR}, #{channel,jdbcType=CHAR}, #{recordId,jdbcType=BIGINT}, 
+      #{oui,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pt1002.modules.pojo.Wifi">
+    insert into wifi
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="devmac != null">
+        devmac,
+      </if>
+      <if test="climac != null">
+        climac,
+      </if>
+      <if test="ssid != null">
+        ssid,
+      </if>
+      <if test="bssid != null">
+        bssid,
+      </if>
+      <if test="time != null">
+        time,
+      </if>
+      <if test="signall != null">
+        signall,
+      </if>
+      <if test="channel != null">
+        channel,
+      </if>
+      <if test="recordId != null">
+        record_id,
+      </if>
+      <if test="oui != null">
+        oui,
+      </if>
+      <if test="type != null">
+        filetype,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="devmac != null">
+        #{devmac,jdbcType=VARCHAR},
+      </if>
+      <if test="climac != null">
+        #{climac,jdbcType=VARCHAR},
+      </if>
+      <if test="ssid != null">
+        #{ssid,jdbcType=VARCHAR},
+      </if>
+      <if test="bssid != null">
+        #{bssid,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null">
+        #{time,jdbcType=VARCHAR},
+      </if>
+      <if test="signall != null">
+        #{signall,jdbcType=VARCHAR},
+      </if>
+      <if test="channel != null">
+        #{channel,jdbcType=CHAR},
+      </if>
+      <if test="recordId != null">
+        #{recordId,jdbcType=BIGINT},
+      </if>
+      <if test="oui != null">
+        #{oui,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pt1002.modules.pojo.WifiExample" resultType="java.lang.Integer">
+    select count(*) from wifi
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update wifi
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.devmac != null">
+        devmac = #{record.devmac,jdbcType=VARCHAR},
+      </if>
+      <if test="record.climac != null">
+        climac = #{record.climac,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ssid != null">
+        ssid = #{record.ssid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bssid != null">
+        bssid = #{record.bssid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.time != null">
+        time = #{record.time,jdbcType=VARCHAR},
+      </if>
+      <if test="record.signall != null">
+        signall = #{record.signall,jdbcType=VARCHAR},
+      </if>
+      <if test="record.channel != null">
+        channel = #{record.channel,jdbcType=CHAR},
+      </if>
+      <if test="record.recordId != null">
+        record_id = #{record.recordId,jdbcType=BIGINT},
+      </if>
+      <if test="record.oui != null">
+        oui = #{record.oui,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null">
+        filetype = #{record.type,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update wifi
+    set id = #{record.id,jdbcType=INTEGER},
+      devmac = #{record.devmac,jdbcType=VARCHAR},
+      climac = #{record.climac,jdbcType=VARCHAR},
+      ssid = #{record.ssid,jdbcType=VARCHAR},
+      bssid = #{record.bssid,jdbcType=VARCHAR},
+      time = #{record.time,jdbcType=VARCHAR},
+      signall = #{record.signall,jdbcType=VARCHAR},
+      channel = #{record.channel,jdbcType=CHAR},
+      record_id = #{record.recordId,jdbcType=BIGINT},
+      oui = #{record.oui,jdbcType=VARCHAR},
+    filetype = #{record.type,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pt1002.modules.pojo.Wifi">
+    update wifi
+    <set>
+      <if test="devmac != null">
+        devmac = #{devmac,jdbcType=VARCHAR},
+      </if>
+      <if test="climac != null">
+        climac = #{climac,jdbcType=VARCHAR},
+      </if>
+      <if test="ssid != null">
+        ssid = #{ssid,jdbcType=VARCHAR},
+      </if>
+      <if test="bssid != null">
+        bssid = #{bssid,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null">
+        time = #{time,jdbcType=VARCHAR},
+      </if>
+      <if test="signall != null">
+        signall = #{signall,jdbcType=VARCHAR},
+      </if>
+      <if test="channel != null">
+        channel = #{channel,jdbcType=CHAR},
+      </if>
+      <if test="recordId != null">
+        record_id = #{recordId,jdbcType=BIGINT},
+      </if>
+      <if test="oui != null">
+        oui = #{oui,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        filetype = #{type,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pt1002.modules.pojo.Wifi">
+    update wifi
+    set devmac = #{devmac,jdbcType=VARCHAR},
+      climac = #{climac,jdbcType=VARCHAR},
+      ssid = #{ssid,jdbcType=VARCHAR},
+      bssid = #{bssid,jdbcType=VARCHAR},
+      time = #{time,jdbcType=VARCHAR},
+      signall = #{signall,jdbcType=VARCHAR},
+      channel = #{channel,jdbcType=CHAR},
+      record_id = #{recordId,jdbcType=BIGINT},
+      oui = #{oui,jdbcType=VARCHAR},
+      filetype = #{type,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <delete id="deleteByRecordId" parameterType="Long">
+    DELETE FROM wifi WHERE  record_id = #{recordId,jdbcType=BIGINT}
+  </delete>
+  <select id="selectByRecordId" parameterType="Long" resultMap="BaseResultMap">
+    SELECT * FROM wifi where record_id=#{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectByAll" resultMap="BaseResultMap">
+    select * from wifi
+  </select>
+</mapper>
